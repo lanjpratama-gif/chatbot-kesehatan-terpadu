@@ -1,5 +1,7 @@
 KATA_DARURAT = [
     "sesak napas berat",
+    "sesak npas",
+    "sesak npas berat",
     "sesak napas",
     "sesak nafas",
     "sulit bernapas",

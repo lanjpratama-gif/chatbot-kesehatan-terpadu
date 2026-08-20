@@ -8,6 +8,7 @@ from guardrail import (
 def test_urgensi():
     kasus = [
         ("saya sesak napas berat", "darurat"),
+        ("saya sesak npas berat", "darurat"),
         ("saya sesak nafas", "darurat"),
         ("saya sulit sekali bernapas", "darurat"),
         ("napas saya terasa berat", "darurat"),
