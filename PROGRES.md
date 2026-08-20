@@ -5,135 +5,346 @@
 - Judul: Chatbot Kesehatan Terpadu
 - Editor: VS Code
 - Bahasa pemrograman: Python
+- Model AI: OpenAI API
+- Program utama: `chatbot.py`
+
+---
 
 ## Tahap yang Sudah Selesai
 
 ### Langkah 1 — Konsep Agen Cerdas
-Sudah memahami:
+
+Memahami konsep dasar agen cerdas:
+
 - Environment
 - Perception
 - Action
 - Goal
 - Goal-based agent
 
-### Langkah 2 — Desain Agen
-Chatbot berfungsi sebagai agen cerdas untuk triase awal dan edukasi kesehatan.
+Chatbot dirancang sebagai agen yang menerima input keluhan pengguna, memproses informasi melalui guardrail, kemudian memberikan respons sesuai tingkat urgensi dan cakupan sistem.
 
-Tujuan:
-- Memberikan informasi kesehatan awal.
-- Membantu menentukan tingkat urgensi keluhan.
+---
+
+### Langkah 2 — Desain Agen
+
+Chatbot berfungsi sebagai sistem untuk:
+
+- Edukasi kesehatan umum.
+- Triase awal keluhan kesehatan.
+- Mengenali indikasi kondisi yang membutuhkan perhatian medis.
 - Mengarahkan pengguna ke tenaga medis jika diperlukan.
-- Bukan alat diagnosis dan bukan pengganti dokter.
+
+Sistem bukan alat diagnosis dan bukan pengganti dokter atau tenaga medis profesional.
+
+---
 
 ### Langkah 3 — System Prompt
-Sudah merancang konsep system prompt dengan aturan:
-- Hanya menangani keluhan ringan dan umum.
+
+System prompt dirancang untuk membatasi perilaku AI.
+
+Aturan utama:
+
 - Tidak memberikan diagnosis pasti.
-- Tidak memberikan resep.
+- Tidak mengklaim sebagai dokter atau tenaga medis.
+- Tidak memberikan resep obat.
 - Tidak memberikan dosis obat.
 - Tidak memberikan instruksi pengobatan spesifik.
-- Menggunakan bahasa Indonesia yang sederhana.
-- Mengarahkan pengguna ke tenaga medis jika diperlukan.
+- Menggunakan bahasa yang sederhana dan hati-hati.
+- Mengajukan pertanyaan klarifikasi jika informasi tidak cukup.
+- Mengarahkan pengguna ke tenaga medis jika terdapat tanda bahaya.
+- Tidak menangani kondisi darurat sebagai konsultasi biasa.
+- Membatasi pembahasan pada keluhan kesehatan ringan dan umum.
+
+---
 
 ### Langkah 4 — Guardrail
-Memahami bahwa guardrail adalah lapisan keamanan di luar AI.
 
-Alur:
-User → Guardrail → AI
+Guardrail digunakan sebagai lapisan keamanan sebelum input diteruskan ke AI.
 
-Jika darurat:
-User → Guardrail → Eskalasi medis
+Alur utama:
 
-### Langkah 5 — Guardrail V1
-Sudah berhasil membuat guardrail menggunakan Python.
+```text
+User
+  ↓
+Guardrail
+  ↓
+Pemeriksaan urgensi
+  ↓
+Pemeriksaan permintaan obat/dosis
+  ↓
+Pemeriksaan scope
+  ↓
+AI
 
-Struktur project:
+Guardrail memiliki beberapa kategori urgensi:
 
-chatbot-kesehatan-terpadu/
-├── main.py
-├── guardrail.py
-└── PROGRES.md
+DARURAT
+SEDANG
+RINGAN
+TIDAK DIKENALI
 
-Guardrail saat ini memiliki kategori:
-- DARURAT
-- SEDANG
-- RINGAN
-- TIDAK DIKENALI
+Selain pemeriksaan urgensi, guardrail juga memeriksa:
 
-Contoh pengujian:
-- "saya pilek dan bersin sejak kemarin" → RINGAN
-- "saya sesak napas berat" → DARURAT
+Permintaan obat atau dosis.
+Apakah input masih berada dalam cakupan sistem.
+Langkah 5 — Guardrail V1
 
-## TAHAP BERIKUTNYA
+Guardrail berhasil dibuat menggunakan Python.
 
-### Langkah 6 — Guardrail V2
-Membuat guardrail lebih cerdas agar dapat mengenali berbagai variasi kalimat pengguna.
+Fungsi utama:
+
+cek_urgensi()
+respons_urgensi()
+cek_permintaan_obat()
+respons_permintaan_obat()
+cek_scope()
+respons_di_luar_scope()
+
+Guardrail menggunakan daftar kata/frasa untuk mengenali pola keluhan.
 
 Contoh:
-- "Saya sulit sekali bernapas"
-- "Napas saya terasa berat"
-- "Saya susah menarik napas"
-- "Dada saya terasa sangat sakit"
 
-Setelah itu:
-### Langkah 7 — Integrasi API AI
+"saya sesak napas berat" → DARURAT
+"saya sulit sekali bernapas" → DARURAT
+"napas saya terasa berat" → DARURAT
+"dada saya terasa sangat sakit" → DARURAT
+"saya demam tidak membaik" → SEDANG
+"saya pilek dan bersin" → RINGAN
+Langkah 6 — Integrasi AI
 
-Kemudian dilanjutkan:
-- System Prompt ke API
-- Chatbot percakapan
-- Testing 3 skenario
-- Dokumentasi
-- Diagram alur
-- Laporan akhir
+OpenAI API berhasil diintegrasikan melalui file:
 
+ai_service.py
 
-“Saya sudah selesai Langkah 5. Ini file PROGRES.md saya. Lanjutkan ke Langkah 6.”
+Library yang digunakan:
 
-🔖 CHECKPOINT PROJECT CHATBOT KESEHATAN — 19 Agustus 2026
+openai==3.1.0
+python-dotenv==1.2.2
 
-Project: chatbot-kesehatan-terpadu
+API key disimpan dalam file .env dan tidak dimasukkan ke repository.
 
-Sudah selesai:
+Program menggunakan:
 
-Integrasi OpenAI API berhasil.
-guardrail.py memiliki:
-cek_urgensi()
-cek_permintaan_obat()
-cek_scope()
-respons_urgensi()
-respons_permintaan_obat()
-respons_di_luar_scope()
-Guardrail darurat berhasil diuji.
-Permintaan dosis/resep berhasil diblokir sebelum AI.
-Pertanyaan di luar scope berhasil diblokir.
-Disclaimer otomatis sudah ditambahkan.
+OpenAI Responses API
 
-Masalah terakhir:
-chatbot.py sebelumnya memiliki masalah indentasi/logika sehingga input hanya muncul tanpa respons.
+dengan model:
 
-Solusi terakhir yang diberikan:
-Mengganti seluruh chatbot.py dengan versi yang memiliki:
+gpt-5-mini
 
-tampilkan_disclaimer()
-generate_response()
-urutan guardrail: darurat → obat/dosis → scope → AI
-while True
-perintah keluar
-generate_response(pesan) berada di dalam loop.
+System prompt digunakan untuk membatasi respons AI agar tetap berada pada tujuan edukasi dan triase awal kesehatan.
 
-Tugas BESOK:
+Langkah 7 — Program Chatbot Utama
 
-Jalankan python chatbot.py.
-Uji dalam satu sesi:
-saya pilek dan bersin
-saya mengalami sesak napas berat
-berapa dosis obat untuk demam
-bagaimana cara melakukan operasi jantung
+Program utama berada pada:
+
+chatbot.py
+
+Alur program:
+
+Input pengguna
+      ↓
+Cek urgensi
+      ↓
+Jika DARURAT → Eskalasi medis
+      ↓
+Cek permintaan obat/dosis
+      ↓
+Jika terdeteksi → Tolak permintaan
+      ↓
+Cek scope
+      ↓
+Jika di luar scope → Tolak pertanyaan
+      ↓
+Jika lolos → Kirim ke AI
+      ↓
+Respons chatbot
+
+Program juga menyediakan perintah:
+
 keluar
-Pastikan semua hasil sesuai.
-Setelah itu jangan buru-buru menambah fitur.
-Lanjut ke pengujian formal 3+ skenario, dokumentasi fungsi setiap kode, diagram arsitektur, dan persiapan laporan/refleksi.
 
-Catatan penting: Project harus selalu mengikuti ketentuan tugas: edukasi/triase awal saja, disclaimer wajib, eskalasi darurat tanpa AI, tidak memberikan diagnosis/resep/dosis/instruksi pengobatan spesifik.
+untuk mengakhiri percakapan.
 
-Besok cukup bilang “lanjut dari checkpoint chatbot kesehatan”, lalu tempel checkpoint ini jika diperlukan.
+Langkah 8 — Pengujian Guardrail
+
+Pengujian dilakukan menggunakan:
+
+test_guardrail.py
+
+Skenario yang telah diuji meliputi:
+
+Gejala darurat.
+Gejala ringan.
+Gejala dengan urgensi sedang.
+Input yang belum dapat dikenali.
+Pernyataan negatif mengenai gejala darurat.
+Respons guardrail.
+
+Contoh hasil pengujian:
+
+"saya sesak napas berat" → DARURAT
+"saya sulit sekali bernapas" → DARURAT
+"napas saya terasa berat" → DARURAT
+"dada saya terasa sangat sakit" → DARURAT
+"saya pilek dan bersin" → RINGAN
+"saya demam tidak membaik" → SEDANG
+
+Pengujian berhasil dijalankan dengan:
+
+python test_guardrail.py
+Langkah 9 — Pengujian Program Utama
+
+Program utama berhasil dijalankan dengan:
+
+python chatbot.py
+
+Beberapa skenario yang telah diuji:
+
+Skenario 1 — Kondisi darurat
+
+Input:
+
+saya sesak napas
+
+Hasil:
+
+Urgensi: darurat
+
+Input tidak diteruskan ke AI dan sistem memberikan arahan untuk mencari pertolongan medis.
+
+Skenario 2 — Permintaan dosis obat
+
+Input:
+
+berapa dosis obat untuk demam
+
+Hasil:
+
+Permintaan obat/dosis terdeteksi.
+
+Sistem menolak memberikan dosis atau resep.
+
+Skenario 3 — Pertanyaan di luar scope
+
+Input:
+
+bagaimana cara memperbaiki mobil
+
+Hasil:
+
+Input berada di luar scope.
+
+Pertanyaan tidak diteruskan ke AI.
+
+Skenario 4 — Keluhan ringan
+
+Input:
+
+saya pilek dan bersin
+
+Hasil:
+
+Urgensi: ringan
+
+Input diteruskan ke AI untuk edukasi umum.
+
+Langkah 10 — Pengujian Sintaks Python
+
+Seluruh file Python utama berhasil diperiksa menggunakan:
+
+python -m py_compile ai_service.py chatbot.py guardrail.py test_guardrail.py
+
+Tidak terdapat error sintaks.
+
+Langkah 11 — Repository Git
+
+Repository Git lokal berhasil dibuat.
+
+Branch utama:
+
+main
+
+Commit pertama:
+
+Initial version of health chatbot
+
+Repository berhasil terhubung ke GitHub dan berhasil melakukan push.
+
+Remote:
+
+origin
+
+Status terakhir:
+
+Your branch is up to date with 'origin/main'.
+nothing to commit, working tree clean
+
+File yang masuk repository:
+
+.gitignore
+PROGRES.md
+ai_service.py
+chatbot.py
+guardrail.py
+requirements.txt
+test_guardrail.py
+
+File yang tidak dimasukkan:
+
+.env
+__pycache__/
+*.pyc
+Struktur Project Saat Ini
+chatbot-kesehatan-terpadu/
+│
+├── .gitignore
+├── PROGRES.md
+├── requirements.txt
+├── ai_service.py
+├── chatbot.py
+├── guardrail.py
+└── test_guardrail.py
+Dependency
+
+File requirements.txt berisi:
+
+openai==3.1.0
+python-dotenv==1.2.2
+
+Dependency dapat dipasang menggunakan:
+
+pip install -r requirements.txt
+Status Project
+
+Status saat ini:
+
+IMPLEMENTASI UTAMA SELESAI
+
+Komponen utama sudah tersedia:
+
+ Konsep agen cerdas
+ Desain agen
+ System prompt
+ Guardrail
+ Integrasi OpenAI API
+ Program chatbot utama
+ Pengujian guardrail
+ Pengujian program utama
+ Pengujian sintaks
+ requirements.txt
+ .gitignore
+ Repository Git
+ Push ke GitHub
+Tahap Selanjutnya
+
+Tahap berikutnya adalah penyempurnaan dan dokumentasi project:
+
+Memperbaiki beberapa edge case pada guardrail.
+Menambahkan pengujian untuk permintaan obat/dosis.
+Menambahkan pengujian untuk input di luar scope.
+Menambahkan pengujian variasi penulisan seperti nafas dan napas.
+Menyusun tabel hasil pengujian.
+Membuat diagram alur sistem.
+Menyusun dokumentasi dan laporan akhir.
+Melakukan pemeriksaan akhir repository sebelum dikumpulkan.
