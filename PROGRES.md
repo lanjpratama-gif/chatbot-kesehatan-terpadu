@@ -348,3 +348,18 @@ Menyusun tabel hasil pengujian.
 Membuat diagram alur sistem.
 Menyusun dokumentasi dan laporan akhir.
 Melakukan pemeriksaan akhir repository sebelum dikumpulkan.
+
+---
+
+---
+
+## Langkah 10 — Pengujian End-to-End
+
+Pengujian dilakukan terhadap program utama `chatbot.py` untuk memastikan seluruh alur sistem berjalan sesuai rancangan.
+
+### Skenario 1 — Kondisi Darurat
+
+Input:
+
+```text
+saya sulit bernapas
