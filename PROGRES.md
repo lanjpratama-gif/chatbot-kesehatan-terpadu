@@ -363,3 +363,186 @@ Input:
 
 ```text
 saya sulit bernapas
+Hasil:
+
+```text
+[Guardrail] Urgensi: darurat
+
+Input tidak diteruskan ke AI dan chatbot memberikan respons eskalasi medis.
+
+Skenario 2 — Permintaan Dosis Obat
+
+Input:
+
+berapa dosis obat untuk demam
+
+Hasil:
+
+[Guardrail] Urgensi: tidak_dikenali
+[Guardrail] Permintaan obat/dosis terdeteksi.
+
+Permintaan ditolak oleh guardrail dan tidak diteruskan ke AI.
+
+Skenario 3 — Pertanyaan di Luar Scope
+
+Input:
+
+bagaimana cara memperbaiki mobil
+
+Hasil:
+
+[Guardrail] Urgensi: tidak_dikenali
+[Guardrail] Input berada di luar scope.
+
+Pertanyaan ditolak karena tidak termasuk cakupan chatbot kesehatan.
+
+Skenario 4 — Keluhan Ringan
+
+Input:
+
+saya pilek dan bersin
+
+Hasil:
+
+[Guardrail] Urgensi: ringan
+
+Input diteruskan ke AI untuk memberikan edukasi kesehatan umum.
+
+Langkah 11 — Pengujian Guardrail
+
+Pengujian otomatis dilakukan menggunakan:
+
+python test_guardrail.py
+
+Hasil pengujian:
+
+Pengujian Urgensi
+18/18 PASS
+
+Kategori yang diuji:
+
+DARURAT
+SEDANG
+RINGAN
+TIDAK DIKENALI
+Variasi penulisan napas dan nafas
+Input dengan negasi gejala darurat
+Pengujian Permintaan Obat
+5/5 PASS
+
+Pengujian mencakup:
+
+Permintaan dosis.
+Permintaan jumlah miligram.
+Permintaan obat.
+Frekuensi penggunaan obat.
+Input kesehatan biasa yang tidak meminta obat.
+Pengujian Scope
+11/11 PASS
+
+Pengujian mencakup:
+
+Keluhan kesehatan ringan.
+Pilek.
+Bersin.
+Batuk.
+Sakit kepala.
+Sakit tenggorokan.
+Maag.
+Mual.
+Alergi.
+Pertanyaan otomotif.
+Pertanyaan komputer.
+Pertanyaan harga barang.
+Hasil Akhir
+SEMUA TEST BERHASIL
+Langkah 12 — Pengujian Sintaks
+
+Seluruh file Python diperiksa menggunakan:
+
+python -m py_compile ai_service.py chatbot.py guardrail.py test_guardrail.py
+
+Hasil:
+
+Tidak terdapat error sintaks.
+Langkah 13 — Diagram Alur Sistem
+
+Diagram alur sistem telah dibuat dalam file:
+
+DIAGRAM_ALUR.md
+
+Diagram menggambarkan alur:
+
+User Input
+    ↓
+Guardrail
+    ↓
+Cek Urgensi
+    ↓
+Darurat?
+ ┌──┴──┐
+Ya    Tidak
+ ↓      ↓
+Eskalasi  Cek Obat/Dosis
+Medis       ↓
+          Cek Scope
+             ↓
+          OpenAI API
+             ↓
+       Respons Chatbot
+Langkah 14 — Repository Git
+
+Project telah menggunakan Git untuk version control.
+
+Repository lokal telah dibuat menggunakan:
+
+git init
+
+Repository telah terhubung dengan repository GitHub.
+
+Branch utama:
+
+main
+
+Push ke GitHub telah berhasil dilakukan.
+
+Pemeriksaan repository:
+
+git status
+
+Hasil terakhir:
+
+nothing to commit, working tree clean
+
+File .env tidak dimasukkan ke repository karena terdapat dalam .gitignore.
+
+Status Akhir Project
+
+IMPLEMENTASI UTAMA DAN PENGUJIAN SELESAI
+
+Komponen yang telah selesai:
+
+Konsep agen cerdas
+Desain agen
+System prompt
+Guardrail
+Guardrail V2
+Integrasi OpenAI API
+Program chatbot utama
+Pengujian guardrail
+Pengujian end-to-end
+Pengujian variasi penulisan
+Pengujian permintaan obat/dosis
+Pengujian scope
+Pengujian sintaks
+Diagram alur sistem
+requirements.txt
+.gitignore
+Repository Git
+Push ke GitHub
+
+Tahap berikutnya:
+
+Pemeriksaan akhir repository.
+Penyusunan tabel hasil pengujian.
+Penyusunan dokumentasi/laporan akhir.
