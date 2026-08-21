@@ -546,3 +546,33 @@ Tahap berikutnya:
 Pemeriksaan akhir repository.
 Penyusunan tabel hasil pengujian.
 Penyusunan dokumentasi/laporan akhir.
+
+
+## Penanda Lanjutan
+
+### Posisi Terakhir
+
+Project sudah sampai tahap finalisasi dokumentasi dan persiapan laporan akhir.
+
+### Sudah Selesai
+
+- Guardrail sudah diuji: 18/18 PASS
+- Pengujian obat/dosis: 5/5 PASS
+- Pengujian scope: 11/11 PASS
+- Pengujian sintaks Python: PASS
+- Pengujian program utama: PASS
+- Diagram alur sudah dibuat
+- Repository GitHub sudah di-push
+- File HASIL_PENGUJIAN.md sudah dibuat
+- Dokumentasi hasil pengujian sudah selesai
+
+### Tahap Selanjutnya
+
+1. Pemeriksaan akhir repository.
+2. Penyusunan dokumentasi/laporan akhir.
+3. Penyusunan refleksi kritis mengenai keterbatasan AI.
+4. Persiapan demo project.
+
+### Catatan
+
+Jangan mengubah kode utama kecuali ditemukan masalah saat pemeriksaan akhir.
